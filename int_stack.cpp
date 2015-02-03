@@ -32,32 +32,36 @@ it is a char stack that can contain char
 class Stack {
     int MaxStack;
     int EmptyStack;
-    int top;
+    int index;
     int* items;
 public:
     Stack(int size) {
         MaxStack = size;
         EmptyStack = -1;
-        top = EmptyStack;
+        index = EmptyStack;
         items = new int[MaxStack];
     };
     
     ~Stack() {delete[] items;};
     
-    void push(char c) {
-        items[++top] = c;
+    void push(int c) {
+        items[++index] = c;
     };
     
-    char pop() {
-        return items[top--];
+    int pop() {
+        return items[index--];
+    };
+    
+    int top(){
+        return items[index];
     };
     
     int empty()  {
-        return top == EmptyStack;
+        return index == EmptyStack;
     };
     
     int full()  {
-        return top + 1 == MaxStack;
+        return index + 1 == MaxStack;
     };
 };
 
@@ -67,15 +71,19 @@ int main()
     Stack s(10); // the maximum size of the stack is 10 chars
     
     int ch;
+
+    while ((cin>>ch) && ch != 0)
+        if (!s.full())
+            s.push(ch);
     
-    while ((ch = cin.get()) != '\n')
-        if (!s.full()) s.push(ch);
+    //cout<<s.top()<<endl;
+    
     
     while (!s.empty())
-        cout << s.pop();
+        cout<<s.pop()<<" ";
     
-    cout << endl;
-    
+    cout<<endl;
+
     
     return 0;
 }
